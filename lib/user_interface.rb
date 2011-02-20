@@ -12,7 +12,9 @@ module UserInterface
     purchase = Gosu::Image.new(self, "images/purchase.png")
 
     @info_bar_bg = Gosu::Image.new(self, "images/info_menu_background.png")
-
+    @purchase_bar_bg = Gosu::Image.new(self, 
+                                      "images/purchase_menu_background.png")
+    
     @ui = Button.new(725, 0, ZOrder::Background, exit),
           Button.new(675, 0, ZOrder::Background, purchase)
 
@@ -69,7 +71,7 @@ module UserInterface
     
     # Draw the "info" menu background
     @info_bar_bg.draw(0, 0, ZOrder::Background)
-    
+    @purchase_bar_bg.draw(0, 518, ZOrder::Background)
     @ui.each do |elem|
       elem.draw
     end

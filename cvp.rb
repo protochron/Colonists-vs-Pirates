@@ -62,12 +62,12 @@ class GameWindow < Gosu::Window
     def draw
         #Background and UI draw
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
-
-        @money_bar.draw(10, 0, ZOrder::Background, 1.0, 1.0)
-        @cannon_fire.draw(40, 500, ZOrder::Background, 1.0, 1.0)
-        @cannon_reg.draw(120, 500, ZOrder::Background, 1.0, 1.0)
-
+        
         draw_gui
+
+        @money_bar.draw(10, 3, ZOrder::Background, 1.0, 1.0)
+        @cannon_fire.draw(40, 535, ZOrder::Background, 1.0, 1.0)
+        @cannon_reg.draw(120, 535, ZOrder::Background, 1.0, 1.0)
 
         # Call individual object draw methods
         @ships.each{ |s| s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0) }
