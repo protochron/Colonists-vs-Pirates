@@ -1,6 +1,9 @@
 # This is the module that provides all the UserInterface methods.
 # Its main purpose is to keep the GameWindow class as clean as possible.
 
+require './lib/button'
+require './lib/purchase_button'
+
 module UserInterface
 
   def initialize(*params)
@@ -10,18 +13,28 @@ module UserInterface
 
     exit = Gosu::Image.new(self, "images/exit.png")
     purchase = Gosu::Image.new(self, "images/purchase.png")
-
+    cannon_reg = Gosu::Image.new(self, "images/cannon_reg.png")
+    cannon_fire = Gosu::Image.new(self, "images/cannon_fire.png")
+    barrel = Gosu::Image.new(self, "images/barrel.png")
+    sandbar = Gosu::Image.new(self, "images/sandbar.png")
+    
     @info_bar_bg = Gosu::Image.new(self, "images/info_menu_background.png")
     @purchase_bar_bg = Gosu::Image.new(self, 
                                       "images/purchase_menu_background.png")
     
     @ui = Button.new(725, 0, ZOrder::Background, exit),
-          Button.new(675, 0, ZOrder::Background, purchase)
-
+          Button.new(675, 0, ZOrder::Background, purchase),
+          PurchaseButton.new(40, 525, ZOrder::Background, cannon_reg, self).cost(15),
+          PurchaseButton.new(140, 525, ZOrder::Background, cannon_fire, self).cost(30),
+          PurchaseButton.new(240, 525, ZOrder::Background, barrel, self).cost(15),
+          PurchaseButton.new(340, 525, ZOrder::Background, sandbar, self).cost(40)
+  
   end
   
   def set_window_ref_for_gui(window)
     @window = window
+    
+    @font = Gosu::Font.new(@window, "Arial", 20)
   end
   
   def mouse_update
@@ -75,6 +88,7 @@ module UserInterface
     @ui.each do |elem|
       elem.draw
     end
+
   end
   
 end

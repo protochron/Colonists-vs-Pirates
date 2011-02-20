@@ -4,7 +4,6 @@
 require 'gosu'
 require 'optparse'
 require './lib/ship'
-require './lib/button'
 require './lib/user_interface'
 
 module ZOrder
@@ -20,19 +19,19 @@ class GameWindow < Gosu::Window
     attr_reader :cannon_ball
     
     def initialize
-        super($window_x,$window_y, false)
+        super($window_x, $window_y, false)
         self.caption = "Colonists vs. Pirates!"
         @font = Gosu::Font.new(self, Gosu::default_font_name, 10)
         @mouse_pos_x, @mouse_pos_y = 0,0
         
         set_window_ref_for_gui(self)
-        
+
         # Image elements
         @background = Gosu::Image.new(self, "images/background.png")
         @ship = Gosu::Image.new(self, "images/fast_boat.png")
         @money_bar = Gosu::Image.new(self, "images/money_amount.png")
-        @cannon_fire = Gosu::Image.new(self, "images/canon_fire.png")
-        @cannon_reg = Gosu::Image.new(self, "images/canon_reg.png")
+        @cannon_fire = Gosu::Image.new(self, "images/cannon_fire.png")
+        @cannon_reg = Gosu::Image.new(self, "images/cannon_reg.png")
 
         @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
 
@@ -62,12 +61,15 @@ class GameWindow < Gosu::Window
     def draw
         #Background and UI draw
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
-        
+
         draw_gui
 
         @money_bar.draw(10, 3, ZOrder::Background, 1.0, 1.0)
-        @cannon_fire.draw(40, 535, ZOrder::Background, 1.0, 1.0)
-        @cannon_reg.draw(120, 535, ZOrder::Background, 1.0, 1.0)
+        #@cannon_fire.draw(140, 525, ZOrder::Background, 1.0, 1.0)
+        #@coin_small.draw(40, 580, ZOrder::Background, 1.0, 1.0)
+        #@cannon_reg.draw(40, 525, ZOrder::Background, 1.0, 1.0)
+
+        
 
         # Call individual object draw methods
         @ships.each do |s|
