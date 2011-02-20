@@ -25,6 +25,8 @@ class GameWindow < Gosu::Window
         @font = Gosu::Font.new(self, Gosu::default_font_name, 10)
         @mouse_pos_x, @mouse_pos_y = 0,0
         
+        set_window_ref_for_gui(self)
+        
         # Image elements
         @background = Gosu::Image.new(self, "images/background.png")
         @ship = Gosu::Image.new(self, "images/fast_boat.png")
@@ -62,8 +64,6 @@ class GameWindow < Gosu::Window
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
 
         @money_bar.draw(10, 0, ZOrder::Background, 1.0, 1.0)
-        #@purchase.draw(500, 0, ZOrder::Background, 1.0, 1.0)
-        #@exit.draw(600, 0, ZOrder::Background, 1.0, 1.0)
         @cannon_fire.draw(40, 500, ZOrder::Background, 1.0, 1.0)
         @cannon_reg.draw(120, 500, ZOrder::Background, 1.0, 1.0)
 

@@ -11,9 +11,15 @@ module UserInterface
     exit = Gosu::Image.new(self, "images/exit.png")
     purchase = Gosu::Image.new(self, "images/purchase.png")
 
+    @info_bar_bg = Gosu::Image.new(self, "images/info_menu_background.png")
+
     @ui = Button.new(725, 0, ZOrder::Background, exit),
           Button.new(675, 0, ZOrder::Background, purchase)
 
+  end
+  
+  def set_window_ref_for_gui(window)
+    @window = window
   end
   
   def mouse_update
@@ -60,6 +66,10 @@ module UserInterface
   end
 
   def draw_gui
+    
+    # Draw the "info" menu background
+    @info_bar_bg.draw(0, 0, ZOrder::Background)
+    
     @ui.each do |elem|
       elem.draw
     end
