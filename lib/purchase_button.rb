@@ -21,6 +21,10 @@ class PurchaseButton < Button
     self
   end
   
+  def unclicked(e)
+    # Change the game state to the type of this object for purcashing
+    e.state.click_mode = :regular_cannon
+  end
   
   def draw()
     super

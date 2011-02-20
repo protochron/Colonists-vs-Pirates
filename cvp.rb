@@ -77,6 +77,9 @@ class GameWindow < Gosu::Window
         # Draw elements that are part of the GUI.
         draw_gui
 
+        # Draw the individual tiles and anything that may be on them
+        @tiles.each { |t| t.draw }
+
         # Call individual object draw methods
         @ships.each do |s|
              s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)

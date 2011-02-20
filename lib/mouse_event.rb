@@ -6,6 +6,9 @@
 #
 # In the case that this object is created when a mouse is moved, the 
 # button field is set to nil.
+#
+# The sender field is always from where the click originated (the GameWindow).
+# The state is a reference to the interface's current state.
 
-class MouseEvent < Struct.new(:x, :y, :button, :sender)
+class MouseEvent < Struct.new(:x, :y, :button, :sender, :state)
 end

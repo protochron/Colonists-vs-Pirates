@@ -1,14 +1,17 @@
 # This is the module that provides all the UserInterface methods.
 # Its main purpose is to keep the GameWindow class as clean as possible.
 
-require './lib/button'
-require './lib/purchase_button'
-require './lib/close_button'
+%w{button purchase_button close_button interface_state}.each do |file|
+  require File.dirname(__FILE__) + '/' + file
+end
+
+
 module UserInterface
 
   def initialize(*params)
     super(*params)
     
+    @state = InterfaceState.new
     @mouse_pos_x, @mouse_pos_y = 0,0
 
     exit = Gosu::Image.new(self, "images/exit.png")
@@ -45,7 +48,7 @@ module UserInterface
   end
 
   def mouse_move
-    event = MouseEvent.new mouse_x, mouse_y, nil, @window
+    event = MouseEvent.new mouse_x, mouse_y, nil, @window, @state
     
     @ui.each do |elem|
       unless elem.within_clickable?(@mouse_pos_x, @mouse_pos_y)
@@ -66,7 +69,7 @@ module UserInterface
 
 
   def button_down(id)
-    event = MouseEvent.new mouse_x, mouse_y, id, @window
+    event = MouseEvent.new mouse_x, mouse_y, id, @window, @state
     
     @ui.each do |elem|
       elem.clicked(event) if elem.within_clickable?(event.x, event.y)
@@ -74,7 +77,7 @@ module UserInterface
   end
   
   def button_up(id)
-    event = MouseEvent.new mouse_x, mouse_y, id, @window
+    event = MouseEvent.new mouse_x, mouse_y, id, @window, @state
     
     @ui.each do |elem|
       elem.unclicked(event) if elem.within_clickable?(event.x, event.y)
