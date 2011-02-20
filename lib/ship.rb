@@ -5,27 +5,25 @@ require File.dirname(__FILE__) + '/projectile'
 class Ship < GameObject
     @@speed = 0.1 #Controls movement speed for ships
     @@shoot_interval = 3 * 60 
-    attr_accessor :health
+    attr_accessor :health, :projectiles
 
     def initialize(x, y, image, health = 100)
         super(x, y, image)
         @health = health
         @tick_counter = 0
         @projectiles = []
-        @delay = 2 * 60
+        @delay = 3 * 60
     end
 
     # Actions to take every window update
     def tick
+        @x -= 0.1 
+        @tick_counter += 1
+
         #Puts a delay on shooting
         if @delay > 0
             @delay -= 1
         end
-
-        @tick_counter += 1
-        @x -= 0.1 
-
-        #p "#@x, #@y"
 
         @projectiles.each do |p|
             p.tick

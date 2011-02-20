@@ -29,7 +29,7 @@ class Projectile < GameObject
 
 
     def tick
-        if @dir == :left
+        if @direction == :left
             @x -= @speed
         else
             @x += @speed

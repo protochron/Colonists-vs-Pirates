@@ -24,7 +24,6 @@ class GameObject
     # For self-testing bounds checking
     def outside_bounds?
         if @x < 0 or @x > $window_x or @y < 0 or @y > $window_y
-            p "#@x, #@y"
             return true
         end
     end

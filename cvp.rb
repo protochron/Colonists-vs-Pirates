@@ -70,7 +70,10 @@ class GameWindow < Gosu::Window
         @cannon_reg.draw(120, 535, ZOrder::Background, 1.0, 1.0)
 
         # Call individual object draw methods
-        @ships.each{ |s| s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0) }
+        @ships.each do |s|
+             s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)
+             s.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Enemy, 1.0, 1.0)}
+        end
 
     end
 end
