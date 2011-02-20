@@ -12,4 +12,8 @@ class Ship < GameObject
     # Shoot a cannonball straight ahead
     def shoot
     end
+
+    def tick
+        @x -= 0.1
+    end
 end
