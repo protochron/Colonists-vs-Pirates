@@ -27,7 +27,6 @@ class Button
   
   # Called whenever the mouse is clicked within the area of this object
   def clicked(e)
-    puts "Clicked!!!"
     
   end
   
@@ -39,13 +38,11 @@ class Button
   # Called whenever the mouse moves into the clickable region of this object
   def mouse_in(e)
     @state = :hover
-    puts "Mouse moved in!"
   end
   
   # Called whenever the mouse moves out of the clickable region of this object
   def mouse_out(e)
     @state = nil
-    puts "Mouse moved out!"
   end
   
 end

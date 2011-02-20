@@ -20,7 +20,7 @@ class Tile
   end
   
   def unclicked(e)
-    puts "Clicked on tile at #{x}, #{y}"
+    puts "Unclicked on tile at #{x}, #{y}"
   end
   
   

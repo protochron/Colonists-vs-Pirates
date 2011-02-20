@@ -3,7 +3,7 @@
 
 require './lib/button'
 require './lib/purchase_button'
-
+require './lib/close_button'
 module UserInterface
 
   def initialize(*params)
@@ -23,7 +23,7 @@ module UserInterface
     @purchase_bar_bg = Gosu::Image.new(self, 
                                       "images/purchase_menu_background.png")
     
-    @ui = Button.new(725, 0, ZOrder::Background, exit),
+    @ui = CloseButton.new(725, 0, ZOrder::Background, exit),
           Button.new(675, 0, ZOrder::Background, purchase),
           PurchaseButton.new(40, 525, ZOrder::Background, cannon_reg, self).cost(15),
           PurchaseButton.new(140, 525, ZOrder::Background, cannon_fire, self).cost(30),
@@ -45,7 +45,7 @@ module UserInterface
   end
 
   def mouse_move
-    event = MouseEvent.new mouse_x, mouse_y, nil
+    event = MouseEvent.new mouse_x, mouse_y, nil, @window
     
     @ui.each do |elem|
       unless elem.within_clickable?(@mouse_pos_x, @mouse_pos_y)
@@ -66,7 +66,7 @@ module UserInterface
 
 
   def button_down(id)
-    event = MouseEvent.new mouse_x, mouse_y, id
+    event = MouseEvent.new mouse_x, mouse_y, id, @window
     
     @ui.each do |elem|
       elem.clicked(event) if elem.within_clickable?(event.x, event.y)
@@ -74,7 +74,7 @@ module UserInterface
   end
   
   def button_up(id)
-    event = MouseEvent.new mouse_x, mouse_y, id
+    event = MouseEvent.new mouse_x, mouse_y, id, @window
     
     @ui.each do |elem|
       elem.unclicked(event) if elem.within_clickable?(event.x, event.y)

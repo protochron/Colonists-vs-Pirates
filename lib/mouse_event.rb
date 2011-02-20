@@ -7,5 +7,5 @@
 # In the case that this object is created when a mouse is moved, the 
 # button field is set to nil.
 
-class MouseEvent < Struct.new(:x, :y, :button)
+class MouseEvent < Struct.new(:x, :y, :button, :sender)
 end
