@@ -3,8 +3,10 @@
 
 require 'gosu'
 require 'optparse'
-require './lib/ship'
-require './lib/user_interface'
+
+%w{ship user_interface tile}.each do |fname|
+  require File.dirname(__FILE__) + '/lib/' + fname
+end
 
 module ZOrder
     Background, UI, Enemy, Player = *0..3
@@ -29,26 +31,36 @@ class GameWindow < Gosu::Window
         # Image elements
         @background = Gosu::Image.new(self, "images/background.png")
         @ship = Gosu::Image.new(self, "images/fast_boat.png")
-        @money_bar = Gosu::Image.new(self, "images/money_amount.png")
-        @cannon_fire = Gosu::Image.new(self, "images/cannon_fire.png")
-        @cannon_reg = Gosu::Image.new(self, "images/cannon_reg.png")
-
         @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
 
         # Object collections
         @ships = []
+
+        # Map tile collections
+        @tiles = build_tile_maps()
 
         # For testing
         @ships << Ship.new(800, 330, @ship)
 
     end
 
+    def build_tile_maps
+      tiles = []
+      (0..6).to_a.each do |x|
+        (0..5).to_a.each do |y|
+          tiles << Tile.new(x*100+138, y*100+20, 100, 100)
+        end
+      end
+      
+      tiles
+    end
 
     def update
         if button_down? Gosu::Button::KbQ or button_down? Gosu::Button::KbEscape
             close
         end
 
+        # Determine if the mouse moved. Send the message to the correct places.
         mouse_update
         
         @ships.each{|s| s.tick}
@@ -62,14 +74,8 @@ class GameWindow < Gosu::Window
         #Background and UI draw
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
 
+        # Draw elements that are part of the GUI.
         draw_gui
-
-        @money_bar.draw(10, 3, ZOrder::Background, 1.0, 1.0)
-        #@cannon_fire.draw(140, 525, ZOrder::Background, 1.0, 1.0)
-        #@coin_small.draw(40, 580, ZOrder::Background, 1.0, 1.0)
-        #@cannon_reg.draw(40, 525, ZOrder::Background, 1.0, 1.0)
-
-        
 
         # Call individual object draw methods
         @ships.each do |s|

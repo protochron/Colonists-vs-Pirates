@@ -18,6 +18,7 @@ module UserInterface
     barrel = Gosu::Image.new(self, "images/barrel.png")
     sandbar = Gosu::Image.new(self, "images/sandbar.png")
     
+    @money_bar = Gosu::Image.new(self, "images/money_amount.png")
     @info_bar_bg = Gosu::Image.new(self, "images/info_menu_background.png")
     @purchase_bar_bg = Gosu::Image.new(self, 
                                       "images/purchase_menu_background.png")
@@ -78,13 +79,23 @@ module UserInterface
     @ui.each do |elem|
       elem.unclicked(event) if elem.within_clickable?(event.x, event.y)
     end
+    
+    unless @tiles.nil? then
+      @tiles.each do |elem|
+        elem.unclicked(event) if elem.within_clickable?(event.x, event.y)
+      end
+    end
+    
   end
 
   def draw_gui
     
-    # Draw the "info" menu background
+    # Draw the "info" menu
     @info_bar_bg.draw(0, 0, ZOrder::Background)
     @purchase_bar_bg.draw(0, 518, ZOrder::Background)
+    @money_bar.draw(10, 3, ZOrder::Background, 1.0, 1.0)
+
+    
     @ui.each do |elem|
       elem.draw
     end

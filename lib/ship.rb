@@ -17,7 +17,7 @@ class Ship < GameObject
 
     # Actions to take every window update
     def tick
-        @x -= 0.1 
+        @x -= 0.1
         @tick_counter += 1
 
         #Puts a delay on shooting
