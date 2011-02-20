@@ -10,10 +10,12 @@ module ZOrder
     Background, UI, Enemy, Player = *0..3
 end
 
-
+$window_x = 800
+$window_y = 600
 class GameWindow < Gosu::Window
+    attr_reader :cannon_ball
     def initialize
-        super(800,600, false)
+        super($window_x,$window_y, false)
         self.caption = "Colonists vs. Pirates!"
         @font = Gosu::Font.new(self, Gosu::default_font_name, 10)
         @mouse_pos_x, @mouse_pos_y = 0,0
@@ -31,11 +33,14 @@ class GameWindow < Gosu::Window
         #@exit_b.clickable_area(600, 0, 650, 30)
         @ui = Button.new(725, 0, ZOrder::Background, exit),
               Button.new(675, 0, ZOrder::Background, purchase)
+        @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
 
-        @enemy_ships = []
+        # Object collections
+        @ships = []
 
         # For testing
-        @enemy_ships << Ship.new(800, 325, @ship)
+        @ships << Ship.new(800, 330, @ship)
+
     end
 
 
@@ -43,12 +48,12 @@ class GameWindow < Gosu::Window
         if button_down? Gosu::Button::KbQ or button_down? Gosu::Button::KbEscape
             close
         end
-        
+
         if mouse_x != @mouse_pos_x or mouse_y != @mouse_pos_y then
           mouse_move
         end
         
-        @enemy_ships.each{|s| s.tick}
+        @ships.each{|s| s.tick}
     end
 
     def mouse_move
@@ -108,12 +113,12 @@ class GameWindow < Gosu::Window
         @cannon_reg.draw(120, 500, ZOrder::Background, 1.0, 1.0)
 
         # Call individual object draw methods
-        @enemy_ships.each{|s| s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)}
+        @ships.each{ |s| s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0) }
 
     end
 end
 
 # Actully draw our window
-window = GameWindow.new
-window.set_mouse_position(0, 0)
-window.show
+$window = GameWindow.new
+$window.set_mouse_position(0,0)
+$window.show
