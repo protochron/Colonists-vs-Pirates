@@ -16,5 +16,8 @@ class GameObject
         @y = y
     end
 
+    def tick
+    end
+
 
 end
