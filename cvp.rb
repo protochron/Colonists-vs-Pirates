@@ -47,7 +47,7 @@ class GameWindow < Gosu::Window
     def build_tile_maps
       tiles = []
       (0..6).to_a.each do |x|
-        (0..5).to_a.each do |y|
+        (0..4).to_a.each do |y|
           tiles << Tile.new(x*100+138, y*100+20, 100, 100)
         end
       end
@@ -74,11 +74,12 @@ class GameWindow < Gosu::Window
         #Background and UI draw
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
 
+        # Draw the individual tiles and anything that may be on them
+        @tiles.each { |t| t.draw }
+
         # Draw elements that are part of the GUI.
         draw_gui
 
-        # Draw the individual tiles and anything that may be on them
-        @tiles.each { |t| t.draw }
 
         # Call individual object draw methods
         @ships.each do |s|

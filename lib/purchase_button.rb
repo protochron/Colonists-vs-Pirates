@@ -3,7 +3,7 @@
 require './lib/button'
 
 class PurchaseButton < Button
-  attr_reader :cost
+  attr_reader :cost, :mode
   
   def initialize(*args)
     @window = args.pop
@@ -17,13 +17,18 @@ class PurchaseButton < Button
   
   def cost(val)
     @cost = val
-    
     self
   end
   
+  def mode(val)
+    @mode = val
+    self
+  end
+
+  
   def unclicked(e)
     # Change the game state to the type of this object for purcashing
-    e.state.click_mode = :regular_cannon
+    e.state.click_mode = @mode
   end
   
   def draw()

@@ -19,19 +19,52 @@ module UserInterface
     cannon_reg = Gosu::Image.new(self, "images/cannon_reg.png")
     cannon_fire = Gosu::Image.new(self, "images/cannon_fire.png")
     barrel = Gosu::Image.new(self, "images/barrel.png")
-    sandbar = Gosu::Image.new(self, "images/sandbar.png")
+    sandbar = Gosu::Image.new(self, "images/sandbar_icon.png")
     
     @money_bar = Gosu::Image.new(self, "images/money_amount.png")
     @info_bar_bg = Gosu::Image.new(self, "images/info_menu_background.png")
     @purchase_bar_bg = Gosu::Image.new(self, 
                                       "images/purchase_menu_background.png")
-    
+
+    regcan_but = PurchaseButton.new(40, 
+      525, 
+      ZOrder::Background, 
+      cannon_reg, 
+      self).
+      cost(15).
+      mode([:regular_cannon, cannon_reg])
+
+    firecan_but = PurchaseButton.new(140, 
+      525, 
+      ZOrder::Background, 
+      cannon_fire, 
+      self).
+      cost(45).
+      mode([:fire_cannon, cannon_fire])
+
+    sandbar_but = PurchaseButton.new(340, 
+      525, 
+      ZOrder::Background, 
+      sandbar, 
+      self).
+      cost(40).
+      mode([:sandbar, Gosu::Image.new(self, "images/sandbarge.png")])
+
+    barrel_but = PurchaseButton.new(240, 
+      525, 
+      ZOrder::Background, 
+      barrel, 
+      self).
+      cost(30).
+      mode([:barrel, barrel])
+
     @ui = CloseButton.new(725, 0, ZOrder::Background, exit),
           Button.new(675, 0, ZOrder::Background, purchase),
-          PurchaseButton.new(40, 525, ZOrder::Background, cannon_reg, self).cost(15),
-          PurchaseButton.new(140, 525, ZOrder::Background, cannon_fire, self).cost(30),
-          PurchaseButton.new(240, 525, ZOrder::Background, barrel, self).cost(15),
-          PurchaseButton.new(340, 525, ZOrder::Background, sandbar, self).cost(40)
+          regcan_but,
+          firecan_but,
+          sandbar_but,
+          barrel_but
+
   
   end
   

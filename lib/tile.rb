@@ -22,11 +22,10 @@ class Tile
   end
   
   def unclicked(e)
-    if e.state.click_mode == :regular_cannon then
+    unless e.state.click_mode.nil?
       if @content.nil? then
-        puts "Placed a regular cannon here!"
-        @content = :regular_cannon
-        @image   = Gosu::Image.new(e.sender, "images/cannon_reg.png")
+        @content = e.state.click_mode[0]
+        @image   = e.state.click_mode[1]#Gosu::Image.new(e.sender, "images/sandbarge.png")
         e.state.click_mode = nil
       end
     end
