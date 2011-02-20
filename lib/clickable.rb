@@ -1,11 +1,11 @@
 # Implements behavior for objects that can be clicked.
 
-require File.dirname(__FILE__) + '/game_object'
+#require File.dirname(__FILE__) + '/game_object'
 
 require_relative "mouse_event"
 
-class Clickable
-  attr_reader :clickable_area
+module Clickable
+  #attr_reader :clickable_area
   
   def clickable_area(px, py, qx, qy)
     @px, @py = px, py
