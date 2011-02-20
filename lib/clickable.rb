@@ -29,6 +29,14 @@ class Clickable
   
   # Called whenever the mouse button is released within the area of this object
   def unclicked(mouse_event)
-    
   end
+  
+  # Called whenever the mouse moves into the clickable region of this object
+  def mouse_in(mouse_event)
+  end
+  
+  # Called whenever the mouse moves out of the clickable region of this object
+  def mouse_out(mouse_event)
+  end
+  
 end
