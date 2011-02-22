@@ -1,6 +1,9 @@
 # This is the main driver. Code will follow shortly.
 #
 
+if RUBY_VERSION == "1.8.7"
+    require 'rubygems'
+end
 require 'gosu'
 require 'optparse'
 
