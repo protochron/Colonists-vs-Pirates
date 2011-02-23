@@ -21,7 +21,7 @@ $window_y = 600
 class GameWindow < Gosu::Window
     include UserInterface
     
-    attr_reader :cannon_ball
+    attr_reader :cannon_ball, :tiles
     
     def initialize
         super($window_x, $window_y, false)
@@ -78,7 +78,17 @@ class GameWindow < Gosu::Window
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
 
         # Draw the individual tiles and anything that may be on them
-        @tiles.each { |t| t.draw }
+        # If there is an object other than a symbol being represented, 
+        #    check its health and delete if necessary
+        @tiles.each do |t| 
+            t.draw 
+            if t.content.class != Symbol and t.content.class != NilClass
+                if t.content.health < 1
+                    t.content = nil
+                    t.image = nil
+                end
+            end
+        end
 
         # Draw elements that are part of the GUI.
         draw_gui

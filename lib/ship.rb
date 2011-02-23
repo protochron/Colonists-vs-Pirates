@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/projectile'
 # Implements a basic Ship object. This is the simple enemy unit of the game.
 class Ship < GameObject
     @@speed = 0.1 #Controls movement speed for ships
-    @@shoot_interval = 3 * 60 
+    @@shoot_interval = 7 * 60 
     attr_accessor :health, :projectiles
 
     def initialize(x, y, image, health = 100)
@@ -16,8 +16,11 @@ class Ship < GameObject
     end
 
     # Actions to take every window update
-    def tick
-        @x -= 0.1
+    def tick 
+        # Move only if there isn't anything blocking this ship's path
+        if $window.tiles.select{|t| t.within_clickable?(@x,@y) and !t.content.nil?}.empty?
+            @x -= 0.1
+        end
         @tick_counter += 1
 
         #Puts a delay on shooting
@@ -25,9 +28,14 @@ class Ship < GameObject
             @delay -= 1
         end
 
+        # Projectile movement loop. Each ship is responsible for moving its own cannon shots.
+        # It just works out slightly cleaner this way.
         @projectiles.each do |p|
             p.tick
-            if p.outside_bounds?
+            if p.outside_bounds? or !p.hit.nil?
+                if !p.hit.nil?
+                    p.hit.content.health -= p.damage
+                end
                 @projectiles.delete(p)
             end
         end

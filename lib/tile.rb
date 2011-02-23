@@ -2,6 +2,7 @@
 # on to add or remove things from that tile.
 
 require File.dirname(__FILE__) + '/clickable'
+require File.dirname(__FILE__) + '/sandbar'
 
 class Tile
   include Clickable
@@ -24,7 +25,13 @@ class Tile
   def unclicked(e)
     unless e.state.click_mode.nil?
       if @content.nil? then
-        @content = e.state.click_mode[0]
+        #@content = e.state.click_mode[0]
+          # Eventually this if statement will be unecessary since *everything* will be a proper object
+          if e.state.click_mode[0] == :sandbar
+              @content = Sandbar.new
+          else
+              @content = e.state.click_mode[0]
+          end
         @image   = e.state.click_mode[1]#Gosu::Image.new(e.sender, "images/sandbarge.png")
         e.state.click_mode = nil
       end

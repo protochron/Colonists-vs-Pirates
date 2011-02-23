@@ -12,19 +12,9 @@ class Projectile < GameObject
     end
 
     # Basic code for hit detection.
-    # TODO: Test if this works. Ported from Pirate Duel game, so things might be different here.
-    def hit?(target)
-        if @direction == :right
-            if target.x - (@image.width + @x) < -1
-                return true
-            end
-        else
-            # Reverse for opposite direction
-            if (target.x + target.image.width) - @x > 1
-                return true
-            end
-        end
-        return false
+    def hit
+        hit_object = $window.tiles.select{|t| t.within_clickable?(@x, @y) and !t.content.nil?}
+        return hit_object.first if !hit_object.nil?
     end
 
 
