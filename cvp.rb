@@ -94,10 +94,14 @@ class GameWindow < Gosu::Window
         draw_gui
 
 
-        # Call individual object draw methods
+        # Call ship object draw methods
         @ships.each do |s|
-             s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)
-             s.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Enemy, 1.0, 1.0)}
+            if s.landed?
+                @ships.delete(s)
+            else
+                s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)
+                s.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Enemy, 1.0, 1.0)}
+            end
         end
 
     end

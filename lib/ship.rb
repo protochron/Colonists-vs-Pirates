@@ -17,9 +17,9 @@ class Ship < GameObject
 
     # Actions to take every window update
     def tick 
-        # Move only if there isn't anything blocking this ship's path
-        if $window.tiles.select{|t| t.within_clickable?(@x,@y) and !t.content.nil?}.empty?
-            @x -= 0.1
+        # Move only if there isn't anything blocking this ship's path or if its nowhere near shore
+        if $window.tiles.select{|t| t.within_clickable?(@x,@y) and !t.content.nil?}.empty? and !landed?
+            @x -= @@speed 
         end
         @tick_counter += 1
 
@@ -48,7 +48,14 @@ class Ship < GameObject
 
     # Shoot a cannonball straight ahead
     def shoot
-        @projectiles << Projectile.new(@x, @y, $window.cannon_ball, 10, 0.3, :left) 
+        @projectiles << Projectile.new(@x, @y + 20, $window.cannon_ball, 10, 0.3, :left) 
+    end
+
+    # Test to see if the ship has hit shore
+    def landed?
+        if @x < 51
+            return true
+        end
     end
 
 end

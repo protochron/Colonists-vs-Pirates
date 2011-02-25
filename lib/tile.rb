@@ -1,8 +1,9 @@
 # Represents a tile on the map. It includes Clickable so that it can be clicked
 # on to add or remove things from that tile.
 
-require File.dirname(__FILE__) + '/clickable'
-require File.dirname(__FILE__) + '/sandbar'
+%w{clickable sandbar cannon}.each do |file|
+    require File.dirname(__FILE__) + '/' + file
+end
 
 class Tile
   include Clickable
@@ -29,6 +30,8 @@ class Tile
           # Eventually this if statement will be unecessary since *everything* will be a proper object
           if e.state.click_mode[0] == :sandbar
               @content = Sandbar.new
+          elsif e.state.click_mode[0] == :regular_cannon
+              @content = Cannon.new
           else
               @content = e.state.click_mode[0]
           end
