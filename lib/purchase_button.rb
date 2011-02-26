@@ -35,7 +35,7 @@ class PurchaseButton < Button
     super
     
     @coin_small.draw(@image_x, @image_y + 55, 0)
-        @font.draw(@cost.to_s, @image_x + 20, @image_y + 52, ZOrder::UI)
+    @font.draw(@cost.to_s, @image_x + 20, @image_y + 52, ZOrder::UI)
   end
   
   
