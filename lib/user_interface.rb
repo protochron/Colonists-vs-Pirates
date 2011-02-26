@@ -13,7 +13,7 @@ module UserInterface
     
     @state = InterfaceState.new
     @mouse_pos_x, @mouse_pos_y = 0,0
-
+    
     exit = Gosu::Image.new(self, "images/exit.png")
     purchase = Gosu::Image.new(self, "images/purchase.png")
     cannon_reg = Gosu::Image.new(self, "images/cannon_reg.png")
@@ -32,7 +32,7 @@ module UserInterface
       cannon_reg, 
       self).
       cost(15).
-      mode([:regular_cannon, cannon_reg])
+      mode([:Cannon, cannon_reg])
 
     firecan_but = PurchaseButton.new(140, 
       525, 
@@ -48,7 +48,7 @@ module UserInterface
       sandbar, 
       self).
       cost(40).
-      mode([:sandbar, Gosu::Image.new(self, "images/sandbarge.png")])
+      mode([:Sandbar, Gosu::Image.new(self, "images/sandbarge.png")])
 
     barrel_but = PurchaseButton.new(240, 
       525, 
@@ -56,7 +56,7 @@ module UserInterface
       barrel, 
       self).
       cost(30).
-      mode([:barrel, barrel])
+      mode([:Barrel, barrel])
 
     @ui = CloseButton.new(725, 0, ZOrder::Background, exit),
           Button.new(675, 0, ZOrder::Background, purchase),
@@ -100,6 +100,10 @@ module UserInterface
     @mouse_pos_x, @mouse_pos_y = event.x, event.y
   end
 
+  def draw_money
+    @font.draw($money.to_s, 60, 16, ZOrder::UI)
+  end
+
 
   def button_down(id)
     event = MouseEvent.new mouse_x, mouse_y, id, @window, @state
@@ -135,6 +139,8 @@ module UserInterface
     @ui.each do |elem|
       elem.draw
     end
+
+    draw_money
 
   end
   

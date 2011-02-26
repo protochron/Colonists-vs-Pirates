@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/projectile'
 # Implements a cannon object. This is a basic defensive structure for the player to destroy enemy ships with.
 class Cannon < GameObject
     attr_accessor :health, :projectiles
+    attr_reader :cost
 
     def initialize(x,y)
         @x, @y = x, y
@@ -11,8 +12,8 @@ class Cannon < GameObject
         @projectiles = []
         @tick_counter = 0
         @shoot_interval = 7 * 60
-    end
-
+        @cost = 15
+    
     # Action to take every window update.
     def tick
         @tick_counter += 1

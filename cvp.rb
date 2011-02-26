@@ -17,6 +17,7 @@ end
 
 $window_x = 800
 $window_y = 600
+$money = 100
 
 class GameWindow < Gosu::Window
     include UserInterface
@@ -27,7 +28,7 @@ class GameWindow < Gosu::Window
         super($window_x, $window_y, false)
         self.caption = "Colonists vs. Pirates!"
         @font = Gosu::Font.new(self, Gosu::default_font_name, 10)
-        @mouse_pos_x, @mouse_pos_y = 0,0
+        #@mouse_pos_x, @mouse_pos_y = 0,0
         
         set_window_ref_for_gui(self)
 
