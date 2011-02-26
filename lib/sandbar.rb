@@ -4,7 +4,8 @@ class Sandbar < GameObject
     attr_accessor :health
     attr_reader :cost
     
-    def initialize
+    def initialize(x, y)
+        @x, @y = x, y
         @health = 10
         @cost = 40
     end

@@ -26,13 +26,11 @@ class Tile
   def unclicked(e)
     unless e.state.click_mode.nil?
       if @content.nil? then
-        content = Kernel.const_get(e.state.click_mode[0]).new
+        content = Kernel.const_get(e.state.click_mode[0]).new(x,y)
         if content.cost < $money 
           @content = content
           $money -= content.cost
         end
-        #@content = e.state.click_mode[0]
-          # Eventually this if statement will be unecessary since *everything* will be a proper object
         @image   = e.state.click_mode[1]#Gosu::Image.new(e.sender, "images/sandbarge.png")
         e.state.click_mode = nil
       end

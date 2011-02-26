@@ -13,6 +13,7 @@ class Cannon < GameObject
         @tick_counter = 0
         @shoot_interval = 7 * 60
         @cost = 15
+    end
     
     # Action to take every window update.
     def tick
