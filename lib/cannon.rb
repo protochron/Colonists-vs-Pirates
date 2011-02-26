@@ -5,11 +5,13 @@ require File.dirname(__FILE__) + '/projectile'
 class Cannon < GameObject
     @shoot_interval = 7 * 60
     attr_accessor :health, :projectiles
-
+    attr_reader :cost
+    
     def initialize
         @health = 50
         @projectiles = []
         @tick_counter = 0
+        @cost = 15
     end
 
     # Action to take every window update.
