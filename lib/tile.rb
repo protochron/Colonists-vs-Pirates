@@ -31,7 +31,7 @@ class Tile
           if e.state.click_mode[0] == :sandbar
               @content = Sandbar.new
           elsif e.state.click_mode[0] == :regular_cannon
-              @content = Cannon.new
+              @content = Cannon.new(@x, @y)
           else
               @content = e.state.click_mode[0]
           end

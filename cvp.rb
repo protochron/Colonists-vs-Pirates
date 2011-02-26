@@ -21,7 +21,7 @@ $window_y = 600
 class GameWindow < Gosu::Window
     include UserInterface
     
-    attr_reader :cannon_ball, :tiles
+    attr_reader :cannon_ball, :tiles, :ships
     
     def initialize
         super($window_x, $window_y, false)
@@ -66,7 +66,13 @@ class GameWindow < Gosu::Window
         # Determine if the mouse moved. Send the message to the correct places.
         mouse_update
         
+        # Call tick methods if applicable.
         @ships.each{|s| s.tick}
+        @tiles.each do |t|
+            if !t.content.nil?
+                t.content.tick if t.content.respond_to?('tick')
+            end
+        end
     end
     
     def needs_cursor?
@@ -90,6 +96,13 @@ class GameWindow < Gosu::Window
             end
         end
 
+        # Delete a ship if it's health is < 1.
+        @ships.each do |s|
+            if s.health < 1
+                @ships.delete(s)
+            end
+        end
+
         # Draw elements that are part of the GUI.
         draw_gui
 
@@ -101,6 +114,12 @@ class GameWindow < Gosu::Window
             else
                 s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)
                 s.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Enemy, 1.0, 1.0)}
+            end
+        end
+
+        @tiles.each do |t|
+            if t.content.respond_to?(:projectiles)
+                t.content.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Player, 1.0, 1.0)}
             end
         end
 
