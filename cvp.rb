@@ -36,6 +36,8 @@ class GameWindow < Gosu::Window
         @background = Gosu::Image.new(self, "images/background.png")
         @ship = Gosu::Image.new(self, "images/fast_boat.png")
         @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
+        @game_over_font = Gosu::Font.new(@window, "Arial", 40)
+        @game_over = Gosu::Image.from_text(self, "Game Over", @game_over_font, 30, 40, $window_x / 3, :center)
 
         # Object collections
         @ships = []
@@ -81,6 +83,9 @@ class GameWindow < Gosu::Window
     end
 
     def draw
+        if $money <= 0
+            @game_over.draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
+        end
         #Background and UI draw
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
 
@@ -112,6 +117,7 @@ class GameWindow < Gosu::Window
         @ships.each do |s|
             if s.landed?
                 @ships.delete(s)
+                $money -= 30
             else
                 s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)
                 s.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Enemy, 1.0, 1.0)}
