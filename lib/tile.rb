@@ -1,7 +1,7 @@
 # Represents a tile on the map. It includes Clickable so that it can be clicked
 # on to add or remove things from that tile.
 
-%w{clickable sandbar cannon fire_cannon}.each do |file|
+%w{clickable sandbar cannon fire_cannon barrel}.each do |file|
     require File.dirname(__FILE__) + '/' + file
 end
 

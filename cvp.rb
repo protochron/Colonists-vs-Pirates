@@ -89,7 +89,7 @@ class GameWindow < Gosu::Window
         #    check its health and delete if necessary
         @tiles.each do |t| 
             t.draw 
-            if t.content.class != Symbol and t.content.class != NilClass
+            if t.content.class != NilClass
                 if t.content.health < 1
                     t.content = nil
                     t.image = nil
