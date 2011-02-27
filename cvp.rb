@@ -48,6 +48,8 @@ class GameWindow < Gosu::Window
         # For testing
         @ships << Ship.new(800, 330, @ship)
 
+        @money_counter = 0
+
     end
 
     def build_tile_maps
@@ -66,6 +68,12 @@ class GameWindow < Gosu::Window
             close
         end
 
+        @money_counter += 1
+
+        if @money_counter >= 60
+            @money_counter = 0
+            $money += 1
+        end
         # Determine if the mouse moved. Send the message to the correct places.
         mouse_update
         
@@ -85,6 +93,8 @@ class GameWindow < Gosu::Window
     def draw
         if $money <= 0
             @game_over.draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
+            @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
+            return
         end
         #Background and UI draw
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
