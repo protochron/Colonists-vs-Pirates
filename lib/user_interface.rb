@@ -40,7 +40,7 @@ module UserInterface
       cannon_fire, 
       self).
       cost(45).
-      mode([:fire_cannon, cannon_fire])
+      mode([:FireCannon, cannon_fire])
 
     sandbar_but = PurchaseButton.new(340, 
       525, 

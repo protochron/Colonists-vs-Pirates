@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/projectile'
 class Ship < GameObject
     @@speed = 0.1 #Controls movement speed for ships
     @@shoot_interval = 7 * 60 
-    attr_accessor :health, :projectiles
+    attr_accessor :health, :projectiles, :on_fire, :oil
 
     def initialize(x, y, image, health = 100)
         super(x, y, image)
@@ -13,6 +13,7 @@ class Ship < GameObject
         @tick_counter = 0
         @projectiles = []
         @delay = 3 * 60
+        @oil, @on_fire = false, 0
     end
 
     # Actions to take every window update
@@ -26,6 +27,10 @@ class Ship < GameObject
         #Puts a delay on shooting
         if @delay > 0
             @delay -= 1
+        end
+
+        if @on_fire != 0
+            @health -= @on_fire
         end
 
         # Projectile movement loop. Each ship is responsible for moving its own cannon shots.
@@ -58,4 +63,8 @@ class Ship < GameObject
         end
     end
 
+    # Return true if covered in oil by a barrel explosion.
+    def oil?
+        @oil
+    end
 end
