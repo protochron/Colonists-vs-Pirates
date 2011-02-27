@@ -24,17 +24,26 @@ class Tile
   end
   
   def unclicked(e)
-    unless e.state.click_mode.nil?
+    unless e.state.click_mode.nil? or e.state.click_mode == :sell
       if @content.nil? then
         content = Kernel.const_get(e.state.click_mode[0]).new(x,y)
-        if content.cost < $money 
+        if content.cost <= $money 
           @content = content
           $money -= content.cost
         end
-        @image   = e.state.click_mode[1]#Gosu::Image.new(e.sender, "images/sandbarge.png")
+        @image   = e.state.click_mode[1]
         e.state.click_mode = nil
       end
     end
+    
+    if e.state.click_mode == :sell
+      unless @content.nil? 
+        $money += ((@content.cost) / 2).to_i
+        @content = nil
+        @image = nil
+      end
+    end
+    
   end
   
   def draw()

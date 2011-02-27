@@ -1,8 +1,7 @@
 
 # Implements the basic behavior for a graphical, clickable UI button.
 
-require_relative "clickable"
-#require File.dirname(__FILE__) + '/game_object'
+require File.dirname(__FILE__) + '/clickable'
 
 class Button
   include Clickable

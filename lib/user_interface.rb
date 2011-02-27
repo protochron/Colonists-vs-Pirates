@@ -1,7 +1,7 @@
 # This is the module that provides all the UserInterface methods.
 # Its main purpose is to keep the GameWindow class as clean as possible.
 
-%w{button purchase_button close_button interface_state}.each do |file|
+%w{button purchase_button close_button interface_state sell_button}.each do |file|
   require File.dirname(__FILE__) + '/' + file
 end
 
@@ -15,7 +15,7 @@ module UserInterface
     @mouse_pos_x, @mouse_pos_y = 0,0
     
     exit = Gosu::Image.new(self, "images/exit.png")
-    purchase = Gosu::Image.new(self, "images/purchase.png")
+    sell = Gosu::Image.new(self, "images/purchase.png")
     cannon_reg = Gosu::Image.new(self, "images/cannon_reg.png")
     cannon_fire = Gosu::Image.new(self, "images/cannon_fire.png")
     barrel = Gosu::Image.new(self, "images/barrel.png")
@@ -59,7 +59,7 @@ module UserInterface
       mode([:Barrel, barrel])
 
     @ui = CloseButton.new(725, 0, ZOrder::Background, exit),
-          Button.new(675, 0, ZOrder::Background, purchase),
+          SellButton.new(675, 0, ZOrder::Background, sell),
           regcan_but,
           firecan_but,
           sandbar_but,
