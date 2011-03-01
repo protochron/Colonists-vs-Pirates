@@ -57,3 +57,8 @@ The last defensive structure is the *sandbar*. The sandbar is useful for
 stopping enemy pirate ships until the pirates manage to clear a path through
 it with their cannon balls. The sandbar has an initial 70 HP units.
 
+Progress
+-------------------------
+Development began by first writing the cvp.rb file that drives the bulk of the game. We then added the basic game objects such as ships and cannons. From there, we divided tasks with Cody working on the GUI while Dan worked on getting the backend code working.
+
+We mostly stuck to this division throughout the entire project as Cody developed a working user interface and Dan worked on game mechanics and getting objects to move and act correctly. The Clickable class used by the Tile objects was instrumental in simplifying how and where the player's defences could be set up and what valid targets were for ships.
