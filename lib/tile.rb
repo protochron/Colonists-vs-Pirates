@@ -14,7 +14,7 @@ class Tile
   attr_accessor :content, :x, :y, :width, :height, :image
   
   def initialize(x, y, width, height)
-    super
+    super()
     
     # Retain the values passed into the constructor
     @x, @y = x, y
