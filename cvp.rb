@@ -40,6 +40,7 @@ class GameWindow < Gosu::Window
         @fire_ball = Gosu::Image.new(self, "images/fireball.png")
         @game_over_font = Gosu::Font.new(@window, "Arial", 40)
         @game_over = Gosu::Image.from_text(self, "Game Over", @game_over_font, 40, 40, $window_x / 3, :center)
+        @win_text = Gosu::Image.from_text(self, "You Win!\nPress 'q' to quit.", @game_over_font, 40, 40, $window_x / 3, :center)
         @regular_font = Gosu::Font.new(self, "Arial", 20)
 
         @level = 1
@@ -50,7 +51,11 @@ class GameWindow < Gosu::Window
         @ships = []
         @num_ships = @levels.shift
         @ships_to_deploy = @num_ships
-        @delay = 5 * 60
+
+        # Misc constants
+        @delay = 15 * 60
+        @bounty = 10
+        @loot = 30
 
         @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 20, 40, $window_x / 3, :left)
 
@@ -60,12 +65,13 @@ class GameWindow < Gosu::Window
         # For testing
         #@ships << Ship.new(800, 330, @ship)
 
-        # counters
+        # counters and booleans
         @money_counter = 0
         @deploy_counter = 0
         @level_timer = 0
         @switch = false
         @draw_switch = true
+        @win = false
 
     end
 
@@ -94,18 +100,21 @@ class GameWindow < Gosu::Window
         elsif @draw_switch
             @level_timer += 1
             return
+        elsif @win
+            return
         end
 
         @money_counter += 1
         @deploy_counter += 1
 
-        if @money_counter >= 60
+        if @money_counter >= 120 
             @money_counter = 0
             $money += 1
         end
 
         if @deploy_counter >= @delay and @ships_to_deploy > 0
             @ships << Ship.new(800, rand(5) * 100 + 30, @ship, @fire_ship) 
+            p "here"
             @ships_to_deploy -= 1
             @deploy_counter = 0
         end
@@ -127,9 +136,14 @@ class GameWindow < Gosu::Window
                 @ships.delete(s)
                 @num_ships -= 1
                 @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 20, 40, $window_x / 3, :left)
+                $money += @bounty
             end
             if @num_ships == 0
-                @switch = true 
+                if @levels.size == 0
+                    @win = true
+                else
+                    @switch = true 
+                end
             end
         end
     end
@@ -153,8 +167,11 @@ class GameWindow < Gosu::Window
     # Main draw method
     def draw
         if $money <= 0
-            @game_over.draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
+            @game_over.draw($window_x / 3, $window_y / 3, ZOrder::UI, 1.0, 1.0)
             @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
+            return
+        elsif @win
+            @win_text.draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
             return
         end
 
@@ -182,7 +199,7 @@ class GameWindow < Gosu::Window
         @ships.each do |s|
             if s.landed?
                 @ships.delete(s)
-                $money -= 30
+                $money -= @loot 
             else
                 s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)
                 s.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Enemy, 1.0, 1.0)}

@@ -74,6 +74,7 @@ class Ship < GameObject
         @oil
     end
 
+    # Gets distance from current ship to ship behind it (or that's how it's used anyway)
     def distance(ship)
         @x - ship.x
     end

@@ -6,7 +6,7 @@ class Sandbar < GameObject
     
     def initialize(x, y)
         @x, @y = x, y
-        @health = 50 
+        @health = 70 
         @cost = 40
     end
 end
