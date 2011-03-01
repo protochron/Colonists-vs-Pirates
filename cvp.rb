@@ -145,7 +145,7 @@ class GameWindow < Gosu::Window
         @level += 1
         @num_ships = @ships_to_deploy = @levels.shift
         @switch = false
-        $money = 100 + 20 * @level 
+        $money = 100 + 20 * (@level  - 1)
         @level_text = Gosu::Image.from_text(self, "Level #{@level}", @regular_font, 20, 40, 400, :left)
         @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 20, 40, $window_x / 3, :left)
     end
