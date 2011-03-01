@@ -20,8 +20,12 @@ class Ship < GameObject
     # Actions to take every window update
     def tick 
         # Move only if there isn't anything blocking this ship's path or if its nowhere near shore
-        if $window.tiles.select{|t| t.within_clickable?(@x,@y) and !t.content.nil?}.empty? and !landed?
-            @x -= @@speed 
+        if $window.tiles.select{|t| t.within_clickable?(@x,@y) and !t.content.nil?}.empty? and !landed? 
+            # Ensures that ships do not overlap
+            # Kind of henious looking, but it does the trick
+            if $window.ships.select{|s| distance(s) < 100 and distance(s) > -1  and s.y == @y if s != self}.empty?
+                @x -= @@speed 
+            end
         end
         @tick_counter += 1
 
@@ -68,5 +72,9 @@ class Ship < GameObject
     # Return true if covered in oil by a barrel explosion.
     def oil?
         @oil
+    end
+
+    def distance(ship)
+        @x - ship.x
     end
 end
