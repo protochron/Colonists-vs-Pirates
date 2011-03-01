@@ -39,7 +39,7 @@ class GameWindow < Gosu::Window
         @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
         @fire_ball = Gosu::Image.new(self, "images/fireball.png")
         @game_over_font = Gosu::Font.new(@window, "Arial", 40)
-        @game_over = Gosu::Image.from_text(self, "Game Over", @game_over_font, 40, 40, $window_x / 3, :center)
+        @game_over_text = Gosu::Image.from_text(self, "Game Over", @game_over_font, 40, 40, $window_x / 3, :center)
         @win_text = Gosu::Image.from_text(self, "You Win!\nPress 'q' to quit.", @game_over_font, 40, 40, $window_x / 3, :center)
         @regular_font = Gosu::Font.new(self, "Arial", 20)
 
@@ -72,6 +72,7 @@ class GameWindow < Gosu::Window
         @switch = false
         @draw_switch = true
         @win = false
+        @game_over = false
 
     end
 
@@ -100,12 +101,17 @@ class GameWindow < Gosu::Window
         elsif @draw_switch
             @level_timer += 1
             return
-        elsif @win
+        elsif @win or @game_over
             return
         end
 
         @money_counter += 1
         @deploy_counter += 1
+
+        if $money < 0
+            @game_over = true
+            return
+        end
 
         if @money_counter >= 120 
             @money_counter = 0
@@ -114,7 +120,6 @@ class GameWindow < Gosu::Window
 
         if @deploy_counter >= @delay and @ships_to_deploy > 0
             @ships << Ship.new(800, rand(5) * 100 + 30, @ship, @fire_ship) 
-            p "here"
             @ships_to_deploy -= 1
             @deploy_counter = 0
         end
@@ -122,7 +127,14 @@ class GameWindow < Gosu::Window
         mouse_update
         
         # Call tick methods if applicable.
-        @ships.each{|s| s.tick}
+        @ships.each do |s| 
+            s.tick
+            if s.landed?
+                @ships.delete(s)
+                $money -= @loot 
+            end
+        end
+
         @tiles.each do |t|
             if !t.content.nil?
                 t.content.tick if t.content.respond_to?('tick')
@@ -166,8 +178,8 @@ class GameWindow < Gosu::Window
 
     # Main draw method
     def draw
-        if $money <= 0
-            @game_over.draw($window_x / 3, $window_y / 3, ZOrder::UI, 1.0, 1.0)
+        if @game_over
+            @game_over_text.draw($window_x / 3, $window_y / 3, ZOrder::UI, 1.0, 1.0)
             @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
             return
         elsif @win
@@ -196,11 +208,8 @@ class GameWindow < Gosu::Window
         @ship_text.draw(400, 15, ZOrder::UI)
 
         # Call ship object draw methods
-        @ships.each do |s|
-            if s.landed?
-                @ships.delete(s)
-                $money -= @loot 
-            else
+        if @ships.size > 0
+            @ships.each do |s|
                 s.image.draw(s.x, s.y, ZOrder::Enemy, 1.0,1.0)
                 s.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Enemy, 1.0, 1.0)}
             end
