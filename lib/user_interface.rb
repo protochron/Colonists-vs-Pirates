@@ -65,7 +65,6 @@ module UserInterface
           sandbar_but,
           barrel_but
 
-  
   end
   
   def set_window_ref_for_gui(window)
@@ -104,7 +103,6 @@ module UserInterface
     @font.draw($money.to_s, 60, 16, ZOrder::UI)
   end
 
-
   def button_down(id)
     event = MouseEvent.new mouse_x, mouse_y, id, @window, @state
     
@@ -134,7 +132,6 @@ module UserInterface
     @info_bar_bg.draw(0, 0, ZOrder::Background)
     @purchase_bar_bg.draw(0, 518, ZOrder::Background)
     @money_bar.draw(10, 3, ZOrder::Background, 1.0, 1.0)
-
     
     @ui.each do |elem|
       elem.draw

@@ -28,7 +28,7 @@ class FireCannon < Cannon
                 $window.ships.each do |s|
                     if p.x - s.x >= 1
                         s.health -= p.damage
-                        s.on_fire(@fire_damage) if s.oil? and s.on_fire == 0
+                        s.on_fire = @fire_damage if s.oil? and s.on_fire == 0
                         @projectiles.delete(p)
                         next
                     end

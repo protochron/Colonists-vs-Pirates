@@ -22,7 +22,7 @@ $money = 100
 class GameWindow < Gosu::Window
     include UserInterface
     
-    attr_reader :cannon_ball, :tiles, :ships
+    attr_reader :cannon_ball, :tiles, :ships, :level, :num_ships
     
     def initialize
         super($window_x, $window_y, false)
@@ -38,17 +38,32 @@ class GameWindow < Gosu::Window
         @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
         @game_over_font = Gosu::Font.new(@window, "Arial", 40)
         @game_over = Gosu::Image.from_text(self, "Game Over", @game_over_font, 30, 40, $window_x / 3, :center)
+        @regular_font = Gosu::Font.new(self, "Arial", 10)
+
+        @level = 1
+        @levels = File.open("levels.txt", 'r').readlines.map!{|l| l.chomp!.to_i}
+        @level_text = Gosu::Image.from_text(self, "Level #{level}", @regular_font, 30, 40, $window_x / 3, :left)
 
         # Object collections
         @ships = []
+        @num_ships = @levels.shift
+        @ships_to_deploy = @num_ships
+        @delay = 5 * 60
+
+        @ship_text = Gosu::Image.from_text(self, "Ships remaining #{@num_ships}", @regular_font, 30, 40, $window_x / 3, :left)
 
         # Map tile collections
         @tiles = build_tile_maps()
 
         # For testing
-        @ships << Ship.new(800, 330, @ship)
+        #@ships << Ship.new(800, 330, @ship)
 
+        # counters
         @money_counter = 0
+        @deploy_counter = 0
+        @level_timer = 0
+        @switch = false
+        @draw_switch = true
 
     end
 
@@ -68,11 +83,29 @@ class GameWindow < Gosu::Window
             close
         end
 
+        # Special case updates
+        if @switch
+            switch_levels
+            @switch = false
+            @draw_switch = true
+            return
+        elsif @draw_switch
+            @level_timer += 1
+            return
+        end
+
         @money_counter += 1
+        @deploy_counter += 1
 
         if @money_counter >= 60
             @money_counter = 0
             $money += 1
+        end
+
+        if @deploy_counter >= @delay and @ships_to_deploy > 0
+            @ships << Ship.new(800, rand(5) * 100 + 20, @ship) 
+            @ships_to_deploy -= 1
+            @deploy_counter = 0
         end
         # Determine if the mouse moved. Send the message to the correct places.
         mouse_update
@@ -84,44 +117,57 @@ class GameWindow < Gosu::Window
                 t.content.tick if t.content.respond_to?('tick')
             end
         end
+
+
+        # Delete a ship if it's health is < 1.
+        @ships.each do |s|
+            if s.health < 1
+                @ships.delete(s)
+                @num_ships -= 1
+                @ship_text = Gosu::Image.from_text(self, "Ships remaining #{@num_ships}", 30, 40, $window_x / 3, :left)
+            end
+        end
     end
     
     def needs_cursor?
       return true
     end
 
+    # Clean up code for levels
+    def switch_level
+        @ships.clear if @ships.size != 0
+        @tiles.each {|t| t.content = nil; t.image = nil}
+        @level += 1
+        @num_ships = @ships_to_deploy = @levels.shift
+        @switch = false
+    end
+
+    # Main draw method
     def draw
         if $money <= 0
             @game_over.draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
             @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
             return
         end
+
         #Background and UI draw
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
 
-        # Draw the individual tiles and anything that may be on them
-        # If there is an object other than a symbol being represented, 
-        #    check its health and delete if necessary
-        @tiles.each do |t| 
-            t.draw 
-            if t.content.class != NilClass
-                if t.content.health < 1
-                    t.content = nil
-                    t.image = nil
-                end
+        if @draw_switch
+            Gosu::Image.from_text(self, "Level #{@level}", @game_over_font, 30, 40, 400, :center).draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
+            if @level_timer == 180 
+                @draw_switch = false 
             end
-        end
-
-        # Delete a ship if it's health is < 1.
-        @ships.each do |s|
-            if s.health < 1
-                @ships.delete(s)
-            end
+            return
         end
 
         # Draw elements that are part of the GUI.
         draw_gui
 
+        # Draw level text and num ships remaining
+        # (Easier to do in this file)
+        @level_text.draw(300, 15, ZOrder::Background)
+        @ship_text.draw(400, 15, ZOrder::Background)
 
         # Call ship object draw methods
         @ships.each do |s|
@@ -134,12 +180,19 @@ class GameWindow < Gosu::Window
             end
         end
 
-        @tiles.each do |t|
+        # Draw the individual tiles and anything that may be on them
+        @tiles.each do |t| 
+            t.draw 
+            if t.content.class != NilClass
+                if t.content.health < 1
+                    t.content = nil
+                    t.image = nil
+                end
+            end
             if t.content.respond_to?(:projectiles)
                 t.content.projectiles.each{|p| p.image.draw(p.x, p.y, ZOrder::Player, 1.0, 1.0)}
             end
         end
-
     end
 end
 
