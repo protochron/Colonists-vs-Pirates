@@ -39,6 +39,6 @@ class FireCannon < Cannon
 
     # Shoot a projectile at a ship
     def shoot
-        @projectiles << Projectile.new(@x + 55, @y + 20, $window.cannon_ball, @projectile_damage, 0.3, :right) 
+        @projectiles << Projectile.new(@x + 55, @y + 20, $window.fire_ball, @projectile_damage, 0.3, :right) 
     end
 end
