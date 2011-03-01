@@ -22,7 +22,7 @@ $money = 100
 class GameWindow < Gosu::Window
     include UserInterface
     
-    attr_reader :cannon_ball, :tiles, :ships, :level, :num_ships
+    attr_reader :cannon_ball, :tiles, :ships, :level, :num_ships, :fire_ball
     
     def initialize
         super($window_x, $window_y, false)
@@ -37,6 +37,7 @@ class GameWindow < Gosu::Window
         @ship = Gosu::Image.new(self, "images/fast_boat.png")
         @fire_ship = Gosu::Image.new(self, "images/fast_boat_fire.png")
         @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
+        @fire_ball = Gosu::Image.new(self, "images/fireball.png")
         @game_over_font = Gosu::Font.new(@window, "Arial", 40)
         @game_over = Gosu::Image.from_text(self, "Game Over", @game_over_font, 40, 40, $window_x / 3, :center)
         @regular_font = Gosu::Font.new(self, "Arial", 20)
