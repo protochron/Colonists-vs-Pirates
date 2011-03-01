@@ -1,7 +1,7 @@
 
 # This button is used to exit the game.
 
-require_relative "button"
+require File.dirname(__FILE__) + "/button"
 
 class CloseButton < Button
   

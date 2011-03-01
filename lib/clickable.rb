@@ -2,7 +2,7 @@
 
 #require File.dirname(__FILE__) + '/game_object'
 
-require_relative "mouse_event"
+require File.dirname(__FILE__) + "/mouse_event"
 
 module Clickable
   #attr_reader :clickable_area
