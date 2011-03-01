@@ -28,7 +28,7 @@ module UserInterface
 
     regcan_but = PurchaseButton.new(40, 
       525, 
-      ZOrder::Background, 
+      ZOrder::UI, 
       cannon_reg, 
       self).
       cost(15).
@@ -36,7 +36,7 @@ module UserInterface
 
     firecan_but = PurchaseButton.new(140, 
       525, 
-      ZOrder::Background, 
+      ZOrder::UI, 
       cannon_fire, 
       self).
       cost(45).
@@ -44,7 +44,7 @@ module UserInterface
 
     sandbar_but = PurchaseButton.new(340, 
       525, 
-      ZOrder::Background, 
+      ZOrder::UI, 
       sandbar, 
       self).
       cost(40).
@@ -52,14 +52,14 @@ module UserInterface
 
     barrel_but = PurchaseButton.new(240, 
       525, 
-      ZOrder::Background, 
+      ZOrder::UI, 
       barrel, 
       self).
       cost(30).
       mode([:Barrel, barrel])
 
-    @ui = CloseButton.new(725, 0, ZOrder::Background, exit),
-          SellButton.new(675, 0, ZOrder::Background, sell),
+    @ui = CloseButton.new(725, 0, ZOrder::UI, exit),
+          SellButton.new(675, 0, ZOrder::UI, sell),
           regcan_but,
           firecan_but,
           sandbar_but,
@@ -129,9 +129,9 @@ module UserInterface
   def draw_gui
     
     # Draw the "info" menu
-    @info_bar_bg.draw(0, 0, ZOrder::Background)
-    @purchase_bar_bg.draw(0, 518, ZOrder::Background)
-    @money_bar.draw(10, 3, ZOrder::Background, 1.0, 1.0)
+    @info_bar_bg.draw(0, 0, ZOrder::UI)
+    @purchase_bar_bg.draw(0, 518, ZOrder::UI)
+    @money_bar.draw(10, 3, ZOrder::UI, 1.0, 1.0)
     
     @ui.each do |elem|
       elem.draw

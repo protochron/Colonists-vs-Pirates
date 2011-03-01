@@ -37,12 +37,12 @@ class GameWindow < Gosu::Window
         @ship = Gosu::Image.new(self, "images/fast_boat.png")
         @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
         @game_over_font = Gosu::Font.new(@window, "Arial", 40)
-        @game_over = Gosu::Image.from_text(self, "Game Over", @game_over_font, 30, 40, $window_x / 3, :center)
-        @regular_font = Gosu::Font.new(self, "Arial", 10)
+        @game_over = Gosu::Image.from_text(self, "Game Over", @game_over_font, 40, 40, $window_x / 3, :center)
+        @regular_font = Gosu::Font.new(self, "Arial", 20)
 
         @level = 1
         @levels = File.open("levels.txt", 'r').readlines.map!{|l| l.chomp!.to_i}
-        @level_text = Gosu::Image.from_text(self, "Level #{level}", @regular_font, 30, 40, $window_x / 3, :left)
+        @level_text = Gosu::Image.from_text(self, "Level #{level}", @regular_font, 20, 40, $window_x / 3, :left)
 
         # Object collections
         @ships = []
@@ -50,7 +50,7 @@ class GameWindow < Gosu::Window
         @ships_to_deploy = @num_ships
         @delay = 5 * 60
 
-        @ship_text = Gosu::Image.from_text(self, "Ships remaining #{@num_ships}", @regular_font, 30, 40, $window_x / 3, :left)
+        @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 20, 40, $window_x / 3, :left)
 
         # Map tile collections
         @tiles = build_tile_maps()
@@ -124,7 +124,7 @@ class GameWindow < Gosu::Window
             if s.health < 1
                 @ships.delete(s)
                 @num_ships -= 1
-                @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 30, 40, $window_x / 3, :left)
+                @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 20, 40, $window_x / 3, :left)
             end
             if @num_ships == 0
                 @switch = true 
@@ -144,8 +144,8 @@ class GameWindow < Gosu::Window
         @num_ships = @ships_to_deploy = @levels.shift
         @switch = false
         $money = 100 + 20 * @level 
-        @level_text = Gosu::Image.from_text(self, "Level #{@level}", @game_over_font, 30, 40, 400, :center)
-        @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 30, 40, $window_x / 3, :left)
+        @level_text = Gosu::Image.from_text(self, "Level #{@level}", @regular_font, 20, 40, 400, :center)
+        @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 20, 40, $window_x / 3, :left)
     end
 
     # Main draw method
@@ -160,7 +160,7 @@ class GameWindow < Gosu::Window
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
 
         if @draw_switch
-            Gosu::Image.from_text(self, "Level #{@level}", @game_over_font, 30, 40, 300, :center).draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
+            Gosu::Image.from_text(self, "Level #{@level}", @game_over_font, 40, 40, 300, :center).draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
             if @level_timer >= 180 
                 p "here"
                 @draw_switch = false 
@@ -174,8 +174,8 @@ class GameWindow < Gosu::Window
 
         # Draw level text and num ships remaining
         # (Easier to do in this file)
-        @level_text.draw(300, 15, ZOrder::Background)
-        @ship_text.draw(400, 15, ZOrder::Background)
+        @level_text.draw(300, 15, ZOrder::UI)
+        @ship_text.draw(400, 15, ZOrder::UI)
 
         # Call ship object draw methods
         @ships.each do |s|
