@@ -1,0 +1,59 @@
+Colonists versus Pirates!
+=========================
+
+Colonists versus Pirates is a game that derives from the _Tower Defense_ 
+style of games. The premise is to protect the colony on the beach from 
+pillaging pirates. Defensive items can be put in the water to try to 
+sink pirate ships before they arrive at the coast. These items cost 
+gold. If pirates reach the cost, they pillage the colony for gold.
+
+If the colony loses all its gold, it's game over! 
+
+Basic Mechanics
+---------------
+
+The ocean is divided into tiles. Defensive items can be purchased and placed
+on tiles. Only one item can be placed on a tile at a time. Pirate ships fire 
+cannon balls, so defensive items can be destroyed.
+
+Defensive items are purchased by clicking on the item and then clicking on the
+tile to build it on. If there is enough gold (as listed in the top-left of the 
+game window), the item will be placed.
+
+Items can be sold by clicking the *sell* button in the top-right of the game
+window and then clicking on the item to be sold.
+
+The only resource in the game is _gold_. Without gold, the colony will perish.
+Placing defensive items also costs gold, so it is very important to balance the
+amount spent on defensive structures and the amount reserved in case a pirate 
+ship breaks through defenses and pillages the colony down to zero gold.
+
+Ships and defensive structures can be destroyed by attack them until their HP 
+falls to zero. 
+
+Gold is replenished automatically at a rate of 1 gold every 2 seconds. When a 
+pirate ship is destroyed, the colony receives 10 gold. After each level, the 
+colony receives a bonus of 20 times that level amount. 
+
+Structures
+--------------------
+
+There is only one type of pirate ship. It has an HP of 100 units.
+
+The first, and most primitive defensive structure is the *regular cannon*. It 
+fires cannon balls at ships in its ocean row. It has an initial HP of 50 units.
+Each cannon ball fires for 10 units of damage.
+
+The next defensive structure is the *fire cannon*. It shoots fireballs of swift
+justice for 20 damage per hit. In addition, if the ship has oil status, the 
+ship catches fire and takes 18 damage per second. The fire cannon begins with 
+an initial HP of 70 units.
+
+Barrels are used to cause the *oil* status on ships. This makes them vulnerable
+to catching fire when a fireball from a fire cannon hits the ship. They are 
+invulnerable until hit.
+
+The last defensive structure is the *sandbar*. The sandbar is useful for 
+stopping enemy pirate ships until the pirates manage to clear a path through
+it with their cannon balls. The sandbar has an initial 70 HP units.
+
