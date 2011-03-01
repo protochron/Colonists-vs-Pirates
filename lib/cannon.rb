@@ -28,7 +28,7 @@ class Cannon < GameObject
                 p.tick
                 # Iterate over ships until we find one that intersects.
                 $window.ships.each do |s|
-                    if p.x - s.x >= 1
+                    if p.x - s.x >= 1 and p.y - s.y < 100
                         s.health -= p.damage
                         @projectiles.delete(p)
                         next

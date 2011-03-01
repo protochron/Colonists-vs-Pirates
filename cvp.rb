@@ -144,7 +144,7 @@ class GameWindow < Gosu::Window
         @num_ships = @ships_to_deploy = @levels.shift
         @switch = false
         $money = 100 + 20 * @level 
-        @level_text = Gosu::Image.from_text(self, "Level #{@level}", @regular_font, 20, 40, 400, :center)
+        @level_text = Gosu::Image.from_text(self, "Level #{@level}", @regular_font, 20, 40, 400, :left)
         @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 20, 40, $window_x / 3, :left)
     end
 
@@ -162,7 +162,6 @@ class GameWindow < Gosu::Window
         if @draw_switch
             Gosu::Image.from_text(self, "Level #{@level}", @game_over_font, 40, 40, 300, :center).draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
             if @level_timer >= 180 
-                p "here"
                 @draw_switch = false 
                 @level_timer = 0
             end

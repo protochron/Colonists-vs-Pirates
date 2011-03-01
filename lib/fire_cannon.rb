@@ -26,7 +26,7 @@ class FireCannon < Cannon
                 p.tick
                 # Iterate over ships until we find one that intersects.
                 $window.ships.each do |s|
-                    if p.x - s.x >= 1
+                    if p.x - s.x >= 1 and p.y - s.y < 100
                         s.health -= p.damage
                         s.on_fire = @fire_damage if s.oil? and s.on_fire == 0
                         @projectiles.delete(p)
