@@ -7,13 +7,14 @@ class Ship < GameObject
     @@shoot_interval = 7 * 60 
     attr_accessor :health, :projectiles, :on_fire, :oil
 
-    def initialize(x, y, image, health = 100)
+    def initialize(x, y, image, fire_image = nil, health = 100)
         super(x, y, image)
         @health = health
         @tick_counter = 0
         @projectiles = []
         @delay = 3 * 60
         @oil, @on_fire = false, 0
+        @fire_image = fire_image unless fire_image.nil?
     end
 
     # Actions to take every window update
@@ -30,7 +31,8 @@ class Ship < GameObject
         end
 
         if @on_fire != 0
-            @health -= @on_fire
+          @image = @fire_image unless @fire_image.nil?
+          @health -= @on_fire
         end
 
         # Projectile movement loop. Each ship is responsible for moving its own cannon shots.

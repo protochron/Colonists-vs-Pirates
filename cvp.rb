@@ -35,6 +35,7 @@ class GameWindow < Gosu::Window
         # Image elements
         @background = Gosu::Image.new(self, "images/background.png")
         @ship = Gosu::Image.new(self, "images/fast_boat.png")
+        @fire_ship = Gosu::Image.new(self, "images/fast_boat_fire.png")
         @cannon_ball = Gosu::Image.new(self, "images/cannon_ball.png")
         @game_over_font = Gosu::Font.new(@window, "Arial", 40)
         @game_over = Gosu::Image.from_text(self, "Game Over", @game_over_font, 40, 40, $window_x / 3, :center)
@@ -103,7 +104,7 @@ class GameWindow < Gosu::Window
         end
 
         if @deploy_counter >= @delay and @ships_to_deploy > 0
-            @ships << Ship.new(800, rand(5) * 100 + 30, @ship) 
+            @ships << Ship.new(800, rand(5) * 100 + 30, @ship, @fire_ship) 
             @ships_to_deploy -= 1
             @deploy_counter = 0
         end

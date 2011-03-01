@@ -38,10 +38,10 @@ class Button
   def mouse_in(e)
     @state = :hover
   end
-  
+
   # Called whenever the mouse moves out of the clickable region of this object
   def mouse_out(e)
     @state = nil
   end
-  
+
 end
