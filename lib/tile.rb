@@ -1,3 +1,6 @@
+#
+# Dan Norris and Cody Miller, 2011
+
 # Represents a tile on the map. It includes Clickable so that it can be clicked
 # on to add or remove things from that tile.
 
