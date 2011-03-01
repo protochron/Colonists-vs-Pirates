@@ -12,7 +12,7 @@ require 'optparse'
 end
 
 module ZOrder
-    Background, UI, Enemy, Player = *0..3
+    Background, Enemy, Player, UI = *0..3
 end
 
 $window_x = 800
@@ -85,7 +85,7 @@ class GameWindow < Gosu::Window
 
         # Special case updates
         if @switch
-            switch_levels
+            switch_level
             @switch = false
             @draw_switch = true
             return
@@ -103,7 +103,7 @@ class GameWindow < Gosu::Window
         end
 
         if @deploy_counter >= @delay and @ships_to_deploy > 0
-            @ships << Ship.new(800, rand(5) * 100 + 20, @ship) 
+            @ships << Ship.new(800, rand(5) * 100 + 30, @ship) 
             @ships_to_deploy -= 1
             @deploy_counter = 0
         end
@@ -124,7 +124,10 @@ class GameWindow < Gosu::Window
             if s.health < 1
                 @ships.delete(s)
                 @num_ships -= 1
-                @ship_text = Gosu::Image.from_text(self, "Ships remaining #{@num_ships}", 30, 40, $window_x / 3, :left)
+                @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 30, 40, $window_x / 3, :left)
+            end
+            if @num_ships == 0
+                @switch = true 
             end
         end
     end
@@ -140,6 +143,9 @@ class GameWindow < Gosu::Window
         @level += 1
         @num_ships = @ships_to_deploy = @levels.shift
         @switch = false
+        $money = 100 + 20 * @level 
+        @level_text = Gosu::Image.from_text(self, "Level #{@level}", @game_over_font, 30, 40, 400, :center)
+        @ship_text = Gosu::Image.from_text(self, "Ships remaining: #{@num_ships}", @regular_font, 30, 40, $window_x / 3, :left)
     end
 
     # Main draw method
@@ -154,9 +160,11 @@ class GameWindow < Gosu::Window
         @background.draw(0,0, ZOrder::Background, 1.0, 1.0)
 
         if @draw_switch
-            Gosu::Image.from_text(self, "Level #{@level}", @game_over_font, 30, 40, 400, :center).draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
-            if @level_timer == 180 
+            Gosu::Image.from_text(self, "Level #{@level}", @game_over_font, 30, 40, 300, :center).draw($window_x / 3, $window_y / 2, ZOrder::UI, 1.0, 1.0)
+            if @level_timer >= 180 
+                p "here"
                 @draw_switch = false 
+                @level_timer = 0
             end
             return
         end
