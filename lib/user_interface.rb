@@ -1,3 +1,6 @@
+#
+# Dan Norris and Cody Miller, 2011
+
 # This is the module that provides all the UserInterface methods.
 # Its main purpose is to keep the GameWindow class as clean as possible.
 

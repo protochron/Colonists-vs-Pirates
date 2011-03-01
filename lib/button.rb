@@ -1,4 +1,6 @@
-
+#
+# Dan Norris and Cody Miller, 2011
+#
 # Implements the basic behavior for a graphical, clickable UI button.
 
 require File.dirname(__FILE__) + '/clickable'

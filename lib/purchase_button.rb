@@ -1,3 +1,6 @@
+#
+# Dan Norris and Cody Miller, 2011
+
 # Represents a button that is used to purchase new items.
 
 require './lib/button'

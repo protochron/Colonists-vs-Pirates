@@ -1,3 +1,5 @@
+#
+# Dan Norris and Cody Miller, 2011
 
 # This aggregates information for the user interface's current state. 
 #

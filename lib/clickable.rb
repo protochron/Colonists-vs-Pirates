@@ -1,3 +1,6 @@
+#
+# Dan Norris and Cody Miller, 2011
+
 # Implements behavior for objects that can be clicked.
 
 #require File.dirname(__FILE__) + '/game_object'

@@ -1,3 +1,6 @@
+#
+# Dan Norris and Cody Miller, 2011
+
 require File.dirname(__FILE__) + '/game_object'
 # Defines how a projectile moves along with collision detection.
 class Projectile < GameObject

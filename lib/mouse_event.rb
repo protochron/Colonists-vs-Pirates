@@ -1,3 +1,6 @@
+#
+# Dan Norris and Cody Miller, 2011
+
 # This is used to wrap up details about a mouse click event
 # 
 # In the cases that this object is created when a mouse button is clicked, 

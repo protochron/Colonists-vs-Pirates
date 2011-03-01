@@ -1,3 +1,6 @@
+#
+# Dan Norris and Cody Miller, 2011
+
 # This is the main driver. Code will follow shortly.
 #
 
