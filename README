@@ -1,1 +1,3 @@
-This is where install info and instructions will go.
+Colonists vs Pirates requires Ruby in addition to the Gosu library. It has  been tested on Ruby 1.9.2, though it should be backwards compatable with 1.8.7
+
+To run the game, type: ruby cvp.rb in the terminal. The game is mostly mouse-based although 'q' will quit the game.
